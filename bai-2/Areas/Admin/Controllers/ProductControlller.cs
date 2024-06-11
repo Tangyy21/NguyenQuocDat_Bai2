@@ -22,11 +22,11 @@ namespace bai_2.Controllers
             _hosting = hosting;
         }
         //Hiển thị danh sách sản phẩm
-        public IActionResult Index( int ?page)
+        public IActionResult Index( int ?page, string textsearch="")
         {
             var pageIndex = (int)(page != null ? page : 1);
             var pageSize = 6;
-            var productList = _db.Products.Include(x => x.Category).ToList();
+            var productList = _db.Products.Include(x => x.Category).Where(p=>p.Name.ToLower().Contains(textsearch.ToLower())).ToList();
             var pageSum = productList.Count() / pageSize + (productList.Count() % pageSize > 0 ? 1 : 0);
             ViewBag.PageSum = pageSum;
             ViewBag.PagIndex = pageIndex;
