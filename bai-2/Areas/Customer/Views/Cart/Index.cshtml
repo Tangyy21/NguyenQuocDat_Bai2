@@ -9,38 +9,41 @@
                         <h4 class="card-title mb-4">Your shopping cart</h4>
                         @foreach (var item in Model.Items)
                         {
-                            <div class="row gy-3 mb-4">
-            <div class="col-lg-5">
-                <div class="me-lg-5">
-                    <div class="d-flex">
-                        <img src="/@item.Product.ImageUrl" class="borderrounded me-3" style="width: 96px; height: 96px;" />
-                        <div class="">
-                            <a href="#" class="nav-link">@item.Product.Name</a>
+                    <form asp-action="UpdateToCart" method="post">
+                        <input type="hidden" name="productId" value="@item.Product.Id"/>
+                        <div class="row gy-3 mb-4">
+                            <div class="col-lg-5">
+                                <div class="me-lg-5">
+                                    <div class="d-flex">
+                                        <img src="/@item.Product.ImageUrl" class="borderrounded me-3" style="width: 96px; height: 96px;" />
+                                        <div class="">
+                                            <a href="#" class="nav-link">@item.Product.Name</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-columnflex-xl-row text-nowrap">
+                                <div class="">
+                                    <input type="text" name="qty" value="@item.Quantity"
+                                           class="form-control" />
+                                </div>
+                                <div class="">
+                                    <text class="h6">@string.Format("${0:#,##0}", item.Product.Price)</text> <br />
+                                </div>
+                            </div>
+
+                            <div class="col-lg col-sm-6 d-flex justify-content-sm-centerjustify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                                <div class="float-md-end">
+
+                                    <button type="submit" class="btn btn-light border text-primary icon-hover-primary"> Update</button>
+
+                                    <a asp-action="DeleteToCart" asp-controller="Cart" asp-route-productId="@item.Product.Id" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-columnflex-xl-row text-nowrap">
-                <div class="">
-                    <input type="text" name="qty" value="@item.Quantity"
-                           class="form-control" />
-                </div>
-                <div class="">
-                    <text class="h6">@string.Format("${0:#,##0}", item.Product.Price)</text> <br />
-                </div>
-            </div>
-
-            <div class="col-lg col-sm-6 d-flex justify-content-sm-centerjustify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                <div class="float-md-end">
-
-                    <a href="#" class="btn btn-light border text-primary icon-hover-primary"> Update</a>
-
-                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-
-                </div>
-            </div>
-        </div>
+                    </form>
     }
 </div>
 </div>

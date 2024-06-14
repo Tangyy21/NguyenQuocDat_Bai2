@@ -37,10 +37,80 @@ namespace bai_2.Areas.Customer.Controllers
                 }
                 cart.Add(product, 1);
                 HttpContext.Session.SetJson("CART", cart);
+                TempData["success"] = "Product added to cart";
                 // return Json(new { msg="success", qty = cart.Quantity});
                 return RedirectToAction("Index");
             }
             return Json(new { msg = "error" });
         }
+        public IActionResult UpdateToCart(int productId, int qty)
+        {
+            var product = _db.Products.FirstOrDefault(x => x.Id == productId);
+            if (product != null)
+            {
+                Cart cart = HttpContext.Session.GetJson<Cart>("CART");
+                if (cart != null)
+                {
+                   
+                
+                cart.Update(productId,qty);
+                HttpContext.Session.SetJson("CART", cart);
+                // return Json(new { msg="success", qty = cart.Quantity});
+                return RedirectToAction("Index");
+                }
+            }
+            return Json(new { msg = "error" });
+        }
+        public IActionResult DeletetoCart(int productId)
+        {
+            var product = _db.Products.FirstOrDefault(x => x.Id == productId);
+            if (product != null)
+            {
+                Cart cart = HttpContext.Session.GetJson<Cart>("CART");
+                if (cart != null)
+                {
+                    cart.Delete(productId);
+                
+                
+                HttpContext.Session.SetJson("CART", cart);
+                // return Json(new { msg="success", qty = cart.Quantity});
+                return RedirectToAction("Index");
+                }
+            }
+            return Json(new { msg = "error" });
+        }
+        #region API
+        public IActionResult AddToCartAPI(int productId)
+        {
+            var product = _db.Products.FirstOrDefault(x => x.Id == productId);
+            if (product != null)
+            {
+                Cart cart = HttpContext.Session.GetJson<Cart>("CART");
+                if (cart == null)
+                {
+                    cart = new Cart();
+                }
+                cart.Add(product, 1);
+                HttpContext.Session.SetJson("CART", cart);
+                return Json(new { msg = "Product added to cart", qty = cart.Quantity });
+            }
+            return Json(new { msg = "error" });
+        }
+
+        public IActionResult GetQuantityOfCart()
+        {
+            Cart cart = HttpContext.Session.GetJson<Cart>("CART");
+            if (cart != null)
+            {
+                return Json(new { qty = cart.Quantity });
+            }
+            return Json(new { qty = 0 });
+        }
+
+        #endregion
+
     }
 }
+
+    
+

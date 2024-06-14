@@ -30,7 +30,7 @@ namespace bai_2.Models
             }
             else// co roi thi tang len
             {
-                item.Quantity += 1;
+                item.Quantity += qty;
             }
         }
         public void Update(int productId, int qty)
