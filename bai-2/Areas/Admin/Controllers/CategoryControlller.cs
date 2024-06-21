@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace bai_2.Controllers
 {
+    [Area("Admin")]
     public class CategoryControlller : Controller
     {
         private readonly ApplicationDbContext _db;

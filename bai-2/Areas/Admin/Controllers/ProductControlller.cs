@@ -12,6 +12,7 @@ using System.IO;
 
 namespace bai_2.Controllers
 {
+    [Area("Admin")]
     public class ProductControlller : Controller
     {
         private readonly ApplicationDbContext _db;

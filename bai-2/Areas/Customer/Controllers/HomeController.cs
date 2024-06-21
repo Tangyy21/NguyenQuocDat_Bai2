@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace bai_2.Controllers
 {
+    [Area("Customer")]   
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

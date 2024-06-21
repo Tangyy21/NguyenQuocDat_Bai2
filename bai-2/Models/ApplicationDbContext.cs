@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 namespace bai_2.Models
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
         base(options)
@@ -14,9 +16,13 @@ namespace bai_2.Models
         }
         public DbSet<Category> Categories { set; get; }
         public DbSet<Product> Products { set; get; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //seed data to table Categories
             modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "Điện thoại", DisplayOrder = 1 },
